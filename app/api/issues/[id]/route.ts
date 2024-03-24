@@ -4,12 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function PATCH(
   request: NextRequest,
-
-  {
-    params,
-  }: {
-    params: { id: string };
-  }
+  { params }: { params: { id: string } }
 ) {
   const body = await request.json();
 
@@ -29,4 +24,23 @@ export async function PATCH(
     data: { title: body.title, description: body.description },
   });
   return NextResponse.json(updatedIssue, { status: 200 });
+}
+
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: { id: string } }
+) {
+  const issue = await prisma.issue.findUnique({
+    where: { id: parseInt(params.id) },
+  });
+
+  if (!issue)
+    return NextResponse.json(
+      { error: "Invalid Request! Issue does not exist." },
+      { status: 404 }
+    );
+
+  await prisma.issue.delete({ where: { id: issue.id } });
+
+  return NextResponse.json({}, { status: 200 });
 }

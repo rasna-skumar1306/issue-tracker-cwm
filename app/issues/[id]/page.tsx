@@ -7,6 +7,7 @@ import AssigneeSelect from "./AssigneeSelect";
 import DeleteIssueButton from "./DeleteIssueButton";
 import EditIssueButton from "./EditIssueButton";
 import IssueDetailsPage from "./IssueDetailsPage";
+import { Metadata } from "next";
 
 interface Props {
   params: { id: string };
@@ -40,3 +41,8 @@ const IssueDetailPage = async ({ params }: Props) => {
 };
 
 export default IssueDetailPage;
+
+export const metadata: Metadata = {
+  title: "Issue Tracker - Issue Details Page",
+  description: "View all the information of the selected issue.",
+};
